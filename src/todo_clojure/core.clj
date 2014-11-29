@@ -14,9 +14,15 @@
    :body "Good Bye, Cruel World!"
    :headers {}})
 
+(defn about [req]
+  {:status 200
+   :body "My name is Andrei and I created this website!"
+   :headers {}})
+
 (defroutes app
   (GET "/" [] greet)
   (GET "/goodbye" [] goodbye)
+  (GET "/about" [] about)
   (not-found "Page not found."))
 
 (defn -main [port]
