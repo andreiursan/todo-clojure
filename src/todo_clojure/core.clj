@@ -20,9 +20,16 @@
    :body "My name is Andrei and I created this website!"
    :headers {}})
 
+(defn yo [req]
+  (let [name (get-in req [:route-params :name])]
+  {:status 200
+   :body (str "Yo! " name "!")
+   :headers {}}))
+
 (defroutes app
   (GET "/" [] greet)
   (GET "/goodbye" [] goodbye)
+  (GET "/yo/:name" [] yo)
   (GET "/about" [] about)
   (GET "/request" [] handle-dump)
   (not-found "Page not found."))
