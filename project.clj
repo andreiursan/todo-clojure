@@ -7,6 +7,9 @@
                  [ring "1.3.2"]
                  [compojure "1.2.2"]]
 
+  :min-lein-version "2.0.0"
+  :uberjar-name "todo-clojure.jar"
+
   :main todo-clojure.core
 
   :profiles {:dev
