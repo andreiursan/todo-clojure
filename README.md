@@ -1,10 +1,13 @@
 # todo-clojure
 
-A Clojure library designed to ... well, that part is up to you.
+This is a small compojure/ring website that as I use as a playground to
+test clojure Libraries.
 
 ## Usage
 
-FIXME
+```bash
+lein run 3000
+```
 
 ## License
 
