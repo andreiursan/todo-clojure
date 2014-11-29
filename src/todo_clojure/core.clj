@@ -2,9 +2,13 @@
   (:require [ring.adapter.jetty :as jetty]))
 
 (defn greet [req]
-  {:status 200
-   :body "Hello, World!"
-   :headers {}})
+  (if (= "/" (:uri req))
+    {:status 200
+     :body "Hello, World!"
+     :headers {}}
+    {:status 404
+     :body "Page not found."
+     :header {}}))
 
 (defn -main [port]
   (jetty/run-jetty greet
