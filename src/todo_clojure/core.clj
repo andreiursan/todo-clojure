@@ -1,26 +1,26 @@
 (ns todo-clojure.core
   (:require [ring.adapter.jetty :as jetty]
-            [ring.middleware.reload :refer [wrap-reload]]))
+            [ring.middleware.reload :refer [wrap-reload]]
+            [compojure.core :refer [defroutes GET]]
+            [compojure.route :refer [not-found]]))
 
 (defn greet [req]
-  (cond 
-    (= "/" (:uri req))
-    {:status 200
-     :body "Hello, World!"
-     :headers {}}
-    (= "/goodbye" (:uri req))
-    {:status 200
-     :body "Goodbye, Cruel World!"
-     :headers {}}
-    :else
-    {:status 404
-     :body "Page not found."
-     :header {}}))
+  {:status 200
+   :body "Hello, World!"
+   :headers {}})
+
+(defn goodbye [req]
+  {:status 200
+   :body "Good Bye, Cruel World!"
+   :headers {}})
+
+(defroutes app
+  (GET "/" [] greet)
+  (GET "/goodbye" [] goodbye)
+  (not-found "Page not found."))
 
 (defn -main [port]
-  (jetty/run-jetty greet
-                   {:port (Integer. port)}))
+  (jetty/run-jetty app {:port (Integer. port)}))
 
 (defn -dev-main [port]
-  (jetty/run-jetty (wrap-reload #'greet)
-                   {:port (Integer. port)}))
+  (jetty/run-jetty (wrap-reload #'app) {:port (Integer. port)}))
