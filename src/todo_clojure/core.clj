@@ -1,5 +1,6 @@
 (ns todo-clojure.core
-  (:require [ring.adapter.jetty :as jetty]))
+  (:require [ring.adapter.jetty :as jetty]
+            [ring.middleware.reload :refer [wrap-reload]]))
 
 (defn greet [req]
   (if (= "/" (:uri req))
@@ -12,4 +13,8 @@
 
 (defn -main [port]
   (jetty/run-jetty greet
+                   {:port (Integer. port)}))
+
+(defn -dev-main [port]
+  (jetty/run-jetty (wrap-reload #'greet)
                    {:port (Integer. port)}))
