@@ -1,5 +1,6 @@
 (ns todo-clojure.core
-  (:require [todo-clojure.item.model :as items])
+  (:require [todo-clojure.item.model :as items]
+            [todo-clojure.item.handler :refer [handle-index-items]])
   (:require [ring.adapter.jetty :as jetty]
             [ring.middleware.reload :refer [wrap-reload]]
             [ring.middleware.params :refer [wrap-params]]
@@ -55,7 +56,8 @@
   (GET "/yo/:name" [] yo)
   (GET "/calc/:a/:op/:b" [] calc)
   (GET "/about" [] about)
-  (GET "/request" [] handle-dump)
+  (ANY "/request" [] handle-dump)
+  (GET "/items" [] handle-index-items)
   (not-found "Page not found."))
 
 (defn wrap-db [hdlr]
