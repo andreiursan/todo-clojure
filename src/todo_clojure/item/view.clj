@@ -1,6 +1,6 @@
 (ns todo-clojure.item.view
   (:require [hiccup.page :refer [html5]]
-            [hiccup.core :refer [html]]))
+            [hiccup.core :refer [html h]]))
 
 (defn new-item []
   (html
@@ -21,6 +21,13 @@
        [:input.btn.btn-primary
         {:type :submit :value "New item"}]]]]))
 
+(defn delete-item-form [id]
+  (html
+    [:form {:method "post" :action (str "/items/" id)}
+     [:input {:type :hidden :name "_method" :value "delete"}]
+     [:div.btn-group
+      [:input.btn.btn-danger.btn-xs {:type :submit :value "delete"}]]]))
+
 (defn items-page [items]
   (html5 {:lang :en}
          [:head
@@ -37,11 +44,13 @@
               [:table.table.table-striped
                [:thead
                 [:tr
+                 [:th.col-sm-2]
                  [:th "Name"]
                  [:th "Description"]]]
                [:tbody
                 (for [i items]
                   [:tr
+                   [:td (delete-item-form (:id i))]
                    [:td (h (:name i))]
                    [:td (h (:description i))]])]]
               [:div.col-sm-offset-1 "There are no items."])]
@@ -50,3 +59,4 @@
             (new-item)]]
           [:script {:src "http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"}]
           [:script {:src "/bootstrap/js/bootstrap.min.js"}]]))
+
