@@ -13,7 +13,9 @@
             [compojure.route :refer [not-found]]
             [ring.handler.dump :refer [handle-dump]]))
 
-(def db "jdbc:postgresql://localhost/todoclojure")
+(def db (or
+          (System/getenv "DATABASE_URL")
+          "jdbc:postgresql://localhost/todoclojure"))
 
 (defn greet [req]
   {:status 200
