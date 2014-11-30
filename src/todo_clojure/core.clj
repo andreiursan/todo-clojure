@@ -1,6 +1,6 @@
 (ns todo-clojure.core
   (:require [todo-clojure.item.model :as items]
-            [todo-clojure.item.handler :refer [handle-index-items]])
+            [todo-clojure.item.handler :refer [handle-index-items handle-create-item]])
   (:require [ring.adapter.jetty :as jetty]
             [ring.middleware.reload :refer [wrap-reload]]
             [ring.middleware.params :refer [wrap-params]]
@@ -58,6 +58,7 @@
   (GET "/about" [] about)
   (ANY "/request" [] handle-dump)
   (GET "/items" [] handle-index-items)
+  (POST "/items" [] handle-create-item)
   (not-found "Page not found."))
 
 (defn wrap-db [hdlr]
