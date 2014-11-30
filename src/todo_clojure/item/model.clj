@@ -19,25 +19,20 @@
                 db
                 ["INSERT INTO items (name, description)
                  VALUES (?, ?)
-                 RETURNING id"
-                 name
-                 description]))))
+                 RETURNING id" name description]))))
 
 (defn update-item [db id checked]
   (= [1] (db/execute!
            db
            ["UPDATE items
             SET checked = ?
-            WHERE id = ?"
-            checked
-            id])))
+            WHERE id = ?" checked id])))
 
 (defn delete-item [db id]
   (= [1] (db/execute!
            db
            ["DELETE FROM items
-            WHERE id = ?"
-            id])))
+            WHERE id = ?" id])))
 
 (defn read-items [db]
   (db/query
